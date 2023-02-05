@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-01-26 08:24:47
+ * @LastEditTime: 2023-02-02 09:23:25
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /INF404/TP1/analyse_lexicale.h
+ * @FilePath: /INF404/TP2/analyse_lexicale.h
  */
 /* ------------------------------------------------------------------------
 -- paquetage machine_lexemes
@@ -33,6 +33,8 @@ typedef enum
     MUL,          // *
     DIV,          // /
     FIN_SEQUENCE, // pseudo lexeme ajoute en fin de sequence
+    PARO,         // (
+    PARF,         // )
 } Nature_Lexeme;
 
 typedef struct
