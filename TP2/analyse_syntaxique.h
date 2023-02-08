@@ -2,13 +2,13 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:27:33
- * @LastEditTime: 2023-02-05 17:58:31
+ * @LastEditTime: 2023-02-08 21:53:44
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/TP2/analyse_syntaxique.h
  */
 
-void analyser(char *fichier, int *resultat);
+void analyser(char *fichier, int *resultat, int *first);
 // -- e.i : indifferent
 // -- e.f : une Expression Arithmetique a ete lue dans fichier
 // -- si elle ne contient pas d'erreur de syntaxe un message est affiche

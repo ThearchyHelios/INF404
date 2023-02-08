@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-08 21:29:56
+ * @LastEditTime: 2023-02-08 21:56:15
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
@@ -60,11 +60,16 @@ int math(int a, int b, Nature_Lexeme nature)
 }
 
 // need to solve the priority problem
-void analyser(char *fichier, int *resultat)
+void analyser(char *fichier, int *resultat, int *first)
 {
     // 读取第一个词素，如果是数字就直接返回数字，如果是左括号则开始计算
     // 并且在fin_de_sequense中建立循环，需要考虑到括号以及加减 乘除法的优先级
-    demarrer(fichier);
+    // if first = 1 then demarrer
+    if (*first == 1)
+    {
+        demarrer(fichier);
+        *first = 0;
+    }
     Lexeme lexeme_en_cours = lexeme_courant();
     if (lexeme_en_cours.nature == ENTIER)
     {
@@ -74,7 +79,7 @@ void analyser(char *fichier, int *resultat)
     else if (lexeme_en_cours.nature == PARO)
     {
         avancer();
-        analyser(fichier, resultat);
+        analyser(fichier, resultat, first);
     }
     else
     {
@@ -84,8 +89,8 @@ void analyser(char *fichier, int *resultat)
     while (!fin_de_sequence())
     {
         lexeme_en_cours = lexeme_courant();
-        printf("Nature:%s \n", Nature_vers_Chaine(lexeme_en_cours.nature));
         printf("Valeur:%d \n", lexeme_en_cours.valeur);
+        printf("Nature:%s \n", Nature_vers_Chaine(lexeme_en_cours.nature));
         switch (lexeme_en_cours.nature)
         {
             case PLUS:
@@ -98,9 +103,9 @@ void analyser(char *fichier, int *resultat)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    avancer();
+                    // avancer();
                     int temp = 0;
-                    analyser(fichier, &temp);
+                    analyser(fichier, &temp, first);
                     *resultat = *resultat + temp;
                 }
                 else
@@ -119,9 +124,9 @@ void analyser(char *fichier, int *resultat)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    avancer();
+                    // avancer();
                     int temp = 0;
-                    analyser(fichier, &temp);
+                    analyser(fichier, &temp, first);
                     *resultat = *resultat - temp;
                 }
                 else
@@ -140,9 +145,9 @@ void analyser(char *fichier, int *resultat)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    avancer();
+                    // avancer();
                     int temp = 0;
-                    analyser(fichier, &temp);
+                    analyser(fichier, &temp, first);
                     *resultat = *resultat * temp;
                 }
                 else
@@ -161,9 +166,9 @@ void analyser(char *fichier, int *resultat)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    avancer();
+                    // avancer();
                     int temp = 0;
-                    analyser(fichier, &temp);
+                    analyser(fichier, &temp, first);
                     *resultat = *resultat / temp;
                 }
                 else
