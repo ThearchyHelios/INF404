@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-08 22:03:00
+ * @LastEditTime: 2023-02-08 22:31:17
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
@@ -85,8 +85,6 @@ void analyser(char *fichier, int *resultat, int *first)
     while (!fin_de_sequence())
     {
         lexeme_en_cours = lexeme_courant();
-        printf("Valeur:%d \n", lexeme_en_cours.valeur);
-        printf("Nature:%s \n", Nature_vers_Chaine(lexeme_en_cours.nature));
         switch (lexeme_en_cours.nature)
         {
             case PLUS:
