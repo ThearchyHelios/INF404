@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-02-02 09:38:19
+ * @LastEditTime: 2023-02-08 20:22:11
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_lexicale.c
@@ -164,14 +164,18 @@ void reconnaitre_lexeme()
                     etat = E_FIN;
                     break;
                 default:
-                    printf("Erreur_Lexicale");
+                    printf("Erreur_Lexicale1\n");
                     exit(0);
                 };
                 avancer_car();
                 break;
+            case ERREUR_CAR:
+                printf("Erreur_Lexicale2\n");
+                printf("ligne %d, colonne %d\n", numero_ligne(), numero_colonne());
+                exit(0);
 
             default:
-                printf("Erreur_Lexicale\n");
+                printf("Erreur_Lexicale3\n");
                 exit(0);
             };
             break;
@@ -366,7 +370,7 @@ void afficher(Lexeme l)
         printf("colonne %d) : ", l.colonne);
         printf("[");
         printf("nature = %s", Nature_vers_Chaine(l.nature));
-        printf(", chaine = %s, ", l.chaine);
+        printf(", chaine = %s", l.chaine);
         switch (l.nature)
         {
         case ENTIER:

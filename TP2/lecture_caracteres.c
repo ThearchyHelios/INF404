@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2021-01-25 14:43:58
- * @LastEditTime: 2023-01-26 08:15:27
+ * @LastEditTime: 2023-02-08 20:01:50
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /INF404/TP1/lecture_caracteres.c
+ * @FilePath: /INF404/TP2/lecture_caracteres.c
  */
 
 /* ------------------------------------------------------------------------
@@ -105,8 +105,3 @@ void arreter_car()
 }
 
 /* --------------------------------------------------------------------- */
-
-// begin
-// put("Analyseur lexical : Machine_Caracteres. ");
-// put_line("Copyright UJF - UFR IMAG.");
-// end lecture_caracteres;
