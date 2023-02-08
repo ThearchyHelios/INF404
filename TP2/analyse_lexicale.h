@@ -66,6 +66,8 @@ void avancer();
 //        (non fin_de_sequence) => lexeme_courant est le lexeme i+1
 //        l'exception Erreur_Lexicale est levee en cas d'erreur
 
+char *Nature_vers_Chaine(Nature_Lexeme nature);
+
 Lexeme lexeme_courant();
 // pre-condition : la machine sequentielle est demarree
 // lexeme_courant est :
