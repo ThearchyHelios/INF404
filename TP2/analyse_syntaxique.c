@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-08 21:56:15
+ * @LastEditTime: 2023-02-08 22:03:00
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
@@ -59,12 +59,8 @@ int math(int a, int b, Nature_Lexeme nature)
     }
 }
 
-// need to solve the priority problem
 void analyser(char *fichier, int *resultat, int *first)
 {
-    // 读取第一个词素，如果是数字就直接返回数字，如果是左括号则开始计算
-    // 并且在fin_de_sequense中建立循环，需要考虑到括号以及加减 乘除法的优先级
-    // if first = 1 then demarrer
     if (*first == 1)
     {
         demarrer(fichier);
@@ -103,7 +99,6 @@ void analyser(char *fichier, int *resultat, int *first)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    // avancer();
                     int temp = 0;
                     analyser(fichier, &temp, first);
                     *resultat = *resultat + temp;
@@ -124,7 +119,6 @@ void analyser(char *fichier, int *resultat, int *first)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    // avancer();
                     int temp = 0;
                     analyser(fichier, &temp, first);
                     *resultat = *resultat - temp;
@@ -145,7 +139,6 @@ void analyser(char *fichier, int *resultat, int *first)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    // avancer();
                     int temp = 0;
                     analyser(fichier, &temp, first);
                     *resultat = *resultat * temp;
@@ -166,7 +159,6 @@ void analyser(char *fichier, int *resultat, int *first)
                 }
                 else if (lexeme_en_cours.nature == PARO)
                 {
-                    // avancer();
                     int temp = 0;
                     analyser(fichier, &temp, first);
                     *resultat = *resultat / temp;
