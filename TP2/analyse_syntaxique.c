@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-09 08:09:54
+ * @LastEditTime: 2023-02-09 08:37:44
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
@@ -58,13 +58,7 @@ int math(int a, int b, Nature_Lexeme nature)
     }
 }
 
-void analyser(char *fichier, int *resultat, int *first)
-{
-    if (*first == 1)
-    {
-        demarrer(fichier);
-        *first = 0;
-    }
+void rec_expr(int *resultat){
     Lexeme lexeme_en_cours = lexeme_courant();
     if (lexeme_en_cours.nature == ENTIER)
     {
@@ -74,7 +68,7 @@ void analyser(char *fichier, int *resultat, int *first)
     else if (lexeme_en_cours.nature == PARO)
     {
         avancer();
-        analyser(fichier, resultat, first);
+        rec_expr(resultat);
     }
     else
     {
@@ -97,7 +91,7 @@ void analyser(char *fichier, int *resultat, int *first)
             else if (lexeme_en_cours.nature == PARO)
             {
                 int temp = 0;
-                analyser(fichier, &temp, first);
+                rec_expr(&temp);
                 *resultat = *resultat + temp;
             }
             else
@@ -117,7 +111,7 @@ void analyser(char *fichier, int *resultat, int *first)
             else if (lexeme_en_cours.nature == PARO)
             {
                 int temp = 0;
-                analyser(fichier, &temp, first);
+                rec_expr(&temp);
                 *resultat = *resultat - temp;
             }
             else
@@ -137,7 +131,7 @@ void analyser(char *fichier, int *resultat, int *first)
             else if (lexeme_en_cours.nature == PARO)
             {
                 int temp = 0;
-                analyser(fichier, &temp, first);
+                rec_expr(&temp);
                 *resultat = *resultat * temp;
             }
             else
@@ -162,7 +156,7 @@ void analyser(char *fichier, int *resultat, int *first)
             else if (lexeme_en_cours.nature == PARO)
             {
                 int temp = 0;
-                analyser(fichier, &temp, first);
+                rec_expr(&temp);
                 if (temp == 0)
                 {
                     printf("Erreur de syntaxe division par 0 \n");
@@ -184,5 +178,16 @@ void analyser(char *fichier, int *resultat, int *first)
             exit(1);
             break;
         }
+    }
+}
+
+void analyser(char *fichier, int *resultat)
+{
+    demarrer(fichier);
+    rec_expr(resultat);
+    if (!fin_de_sequence())
+    {
+        printf("Erreur de syntaxe \n");
+        exit(1);
     }
 }

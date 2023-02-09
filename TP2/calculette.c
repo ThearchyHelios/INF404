@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios
  * @Date: 2023-01-26 08:53:57
- * @LastEditTime: 2023-02-08 21:54:25
+ * @LastEditTime: 2023-02-09 08:32:01
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/TP2/calculette.c
@@ -14,13 +14,12 @@
 int main(int argc, char *argv[])
 {
     int resultat;
-    int first = 1;
     if (argc != 2)
     {
         printf("Usage : %s fichier \n", argv[0]);
         exit(1);
     }
-    analyser(argv[1], &resultat, &first);
+    analyser(argv[1], &resultat);
     printf("Resultat : %d \n", resultat);
     return 0;
 }
