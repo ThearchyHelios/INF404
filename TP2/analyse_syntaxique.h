@@ -2,13 +2,14 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:27:33
- * @LastEditTime: 2023-02-09 08:37:58
- * @LastEditors: JIANG Yilun
+ * @LastEditTime: 2023-02-09 09:06:58
+ * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.h
  */
 void rec_expr(int *resultat);
 
+void count_PARO_PARF(int *count_PARO, int *count_PARF);
 
 void analyser(char *fichier, int *resultat);
 // -- e.i : indifferent

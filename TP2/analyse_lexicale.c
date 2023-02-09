@@ -1,8 +1,8 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-02-09 08:43:03
- * @LastEditors: JIANG Yilun
+ * @LastEditTime: 2023-02-09 08:57:59
+ * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_lexicale.c
  */
@@ -291,69 +291,6 @@ char *Nature_vers_Chaine(Nature_Lexeme nature)
     };
 }
 
-// int eaep(Lexeme l)
-// {
-//     switch (l.nature)
-//     {
-//     case ENTIER:
-//         return 1;
-//     case PARO:
-//         avancer();
-
-//         if (lexeme_courant().nature == PARO)
-//         {
-//             printf("PARO PARO\n");
-//             avancer();
-//             if (eaep(lexeme_courant()))
-//             {
-//                 avancer();
-//                 if (lexeme_courant().nature == ENTIER)
-//                 {
-//                     avancer();
-//                     if (lexeme_courant().nature == PLUS | lexeme_courant().nature == MOINS | lexeme_courant().nature == MUL | lexeme_courant().nature == DIV)
-//                     {
-//                         avancer();
-//                         if (lexeme_courant().nature == ENTIER)
-//                         {
-//                             avancer();
-//                             if (lexeme_courant().nature == PARF)
-//                             {
-//                                 avancer();
-//                                 return 1;
-//                                 printf("Reussi PARF\n");
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         else if (lexeme_courant().nature == ENTIER)
-//         {
-//             printf("PARO Entier\n");
-//             avancer();
-//             if (lexeme_courant().nature == PLUS | lexeme_courant().nature == MOINS | lexeme_courant().nature == MUL | lexeme_courant().nature == DIV)
-//             {
-//                 avancer();
-//                 if (lexeme_courant().nature == ENTIER)
-//                 {
-//                     avancer();
-//                     if (lexeme_courant().nature == PARF)
-//                     {
-//                         avancer();
-//                         return 1;
-//                         printf("Reussi PARF\n");
-//                     }
-//                 }
-//             }
-//         }
-//         else
-//         {
-//             return 0;
-//         }
-//     default:
-//         return 0;
-//     }
-// }
 
 /* --------------------------------------------------------------------- */
 

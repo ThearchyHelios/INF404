@@ -1,8 +1,8 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-09 08:42:48
- * @LastEditors: JIANG Yilun
+ * @LastEditTime: 2023-02-09 09:07:33
+ * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
  */
@@ -55,6 +55,24 @@ int math(int a, int b, Nature_Lexeme nature)
     default:
         return 0;
         break;
+    }
+}
+
+void count_PARO_PARF(int *count_PARO, int *count_PARF)
+{
+    Lexeme lexeme_en_cours = lexeme_courant();
+    while (!fin_de_sequence())
+    {
+        if (lexeme_en_cours.nature == PARO)
+        {
+            *count_PARO = *count_PARO + 1;
+        }
+        else if (lexeme_en_cours.nature == PARF)
+        {
+            *count_PARF = *count_PARF + 1;
+        }
+        avancer();
+        lexeme_en_cours = lexeme_courant();
     }
 }
 
@@ -183,6 +201,17 @@ void rec_expr(int *resultat){
 
 void analyser(char *fichier, int *resultat)
 {
+    int count_PARO = 0;
+    int count_PARF = 0;
+    demarrer(fichier);
+    count_PARO_PARF(&count_PARO, &count_PARF);
+    if (count_PARO != count_PARF)
+    {
+        printf("Erreur de syntaxe: Parantheses non fermées \n");
+        exit(1);
+    }
+    printf("Count PARO: %d \n", count_PARO);
+    printf("Count PARF: %d \n", count_PARF);
     demarrer(fichier);
     rec_expr(resultat);
     if (!fin_de_sequence())
