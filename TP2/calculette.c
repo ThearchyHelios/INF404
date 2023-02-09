@@ -1,9 +1,9 @@
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:53:57
  * @LastEditTime: 2023-02-09 08:32:01
- * @LastEditors: ThearchyHelios
- * @Description: 
+ * @LastEditors: JIANG Yilun
+ * @Description:
  * @FilePath: /INF404/TP2/calculette.c
  */
 # include <stdio.h>

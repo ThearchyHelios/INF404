@@ -1,8 +1,8 @@
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-09 08:37:44
- * @LastEditors: ThearchyHelios
+ * @LastEditTime: 2023-02-09 08:42:48
+ * @LastEditors: JIANG Yilun
  * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.c
  */

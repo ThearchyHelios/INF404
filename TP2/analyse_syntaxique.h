@@ -1,10 +1,10 @@
 #include "analyse_lexicale.h"
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:27:33
  * @LastEditTime: 2023-02-09 08:37:58
- * @LastEditors: ThearchyHelios
- * @Description: 
+ * @LastEditors: JIANG Yilun
+ * @Description:
  * @FilePath: /INF404/TP2/analyse_syntaxique.h
  */
 void rec_expr(int *resultat);

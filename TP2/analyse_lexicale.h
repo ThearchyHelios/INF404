@@ -1,9 +1,9 @@
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-02-02 09:23:25
- * @LastEditors: ThearchyHelios
- * @Description: 
+ * @LastEditTime: 2023-02-09 08:42:56
+ * @LastEditors: JIANG Yilun
+ * @Description:
  * @FilePath: /INF404/TP2/analyse_lexicale.h
  */
 /* ------------------------------------------------------------------------

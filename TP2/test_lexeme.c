@@ -1,8 +1,8 @@
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:44:08
  * @LastEditTime: 2023-01-26 08:17:31
- * @LastEditors: ThearchyHelios
+ * @LastEditors: JIANG Yilun
  * @Description: 
  * @FilePath: /INF404/TP1/test_lexeme.c
  */

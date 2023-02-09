@@ -1,9 +1,9 @@
 /*
- * @Author: ThearchyHelios
+ * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:43:58
  * @LastEditTime: 2023-01-26 08:20:35
- * @LastEditors: ThearchyHelios
- * @Description: 
+ * @LastEditors: JIANG Yilun
+ * @Description:
  * @FilePath: /INF404/TP1/lecture_caracteres.h
  */
 #ifndef __LEC_CAR__
