@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2021-02-10 17:29:52
- * @LastEditTime: 2023-02-16 15:03:16
+ * @LastEditTime: 2023-02-22 22:03:02
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/TP3/ast_parcours.c
@@ -22,6 +22,15 @@ void aff_operateur(TypeOperateur op)
 		break;
 	case N_MUL:
 		printf("*");
+		break;
+	case N_DIV:
+		printf("/");
+		break;
+	case N_PARO:
+		printf("(");
+		break;
+	case N_PARF:
+		printf(")");
 		break;
 	}
 }
@@ -59,6 +68,15 @@ int evaluation(Ast expr)
 			break;
 		case N_MUL:
 			valeur = evaluation(expr->gauche) * evaluation(expr->droite);
+			break;
+		case N_DIV:
+			valeur = evaluation(expr->gauche) / evaluation(expr->droite);
+			break;
+		case N_PARO:
+			valeur = evaluation(expr->gauche);
+			break;
+		case N_PARF:
+			valeur = evaluation(expr->droite);
 			break;
 		}
 		break;

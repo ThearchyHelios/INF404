@@ -1,10 +1,10 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-09 09:07:33
+ * @LastEditTime: 2023-02-22 21:36:00
  * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: /INF404/TP2/analyse_syntaxique.c
+ * @FilePath: \INF404\TP2\analyse_syntaxique.c
  */
 
 #include <stdio.h>

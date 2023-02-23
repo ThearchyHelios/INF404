@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2021-02-03 18:19:14
- * @LastEditTime: 2023-02-16 14:51:20
+ * @LastEditTime: 2023-02-22 22:03:35
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/TP3/type_ast.h
@@ -19,7 +19,10 @@ typedef enum
 {
 	N_PLUS,
 	N_MUL,
-	N_MOINS
+	N_DIV,
+	N_MOINS,
+	N_PARO,
+	N_PARF
 } TypeOperateur;
 
 typedef struct noeud
