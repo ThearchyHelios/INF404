@@ -1,13 +1,5 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
- * @Date: 2023-03-02 08:37:02
- * @LastEditTime: 2023-03-02 08:37:03
- * @LastEditors: ThearchyHelios
- * @Description: 
- * @FilePath: /INF404/TP4/ast_construction.c
- */
-/*
- * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2021-02-03 18:19:14
  * @LastEditTime: 2023-02-16 14:52:00
  * @LastEditors: ThearchyHelios

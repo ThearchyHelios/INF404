@@ -19,6 +19,7 @@ Ast rec_facteur();
 Ast rec_suite_seq_terme(Ast *ag);
 Ast creer_op_unaire(TypeOperateur op, Ast a);
 TypeOperateur rec_op1();
+TypeOperateur rec_op2();
 int evaluer(Ast a);
 
 void analyser(char *fichier, Ast *arbre);

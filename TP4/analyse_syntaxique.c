@@ -1,7 +1,7 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-03-04 22:31:23
+ * @LastEditTime: 2023-03-04 22:55:54
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /TP4/analyse_syntaxique.c
@@ -71,6 +71,12 @@ Ast rec_suite_seq_terme(Ast *ag)
         ad = rec_terme();
         a1 = creer_operation(op, ag, ad);
         return rec_suite_seq_terme(a1);
+    case MUL:
+    case DIV:
+        op = rec_op2();
+        ad = rec_terme();
+        a1 = creer_operation(op, ag, ad);
+        return rec_suite_seq_terme(a1);
     default:
         return ag;
     }
@@ -107,6 +113,27 @@ TypeOperateur rec_op1()
     return op;
 }
 
+TypeOperateur rec_op2()
+{
+    Lexeme LC = lexeme_courant();
+    TypeOperateur op;
+    switch (LC.nature)
+    {
+    case MUL:
+        op = N_MUL;
+        avancer();
+        break;
+    case DIV:
+        op = N_DIV;
+        avancer();
+        break;
+    default:
+        printf("Erreur de syntaxe : '*' ou '/' attendu ");
+        break;
+    }
+    return op;
+}
+
 int evaluer(Ast a)
 {
     int vg, vd;
@@ -133,8 +160,13 @@ int evaluer(Ast a)
 
 void analyser(char *fichier, Ast *arbre)
 {
+    // use all the functions above to analyse the syntax of the file
+    printf("Analyse syntaxique\n");
     demarrer(fichier);
     *arbre = rec_eag();
+    if (lexeme_courant().nature != FIN_SEQUENCE)
+        printf("Erreur de syntaxe : fin de fichier attendue ");
+    printf("Analyse syntaxique terminee\n");
     int resultat = evaluer(*arbre);
-    printf("Resultat : %d ", resultat);
+    printf("Resultat = %d", resultat);
 }
