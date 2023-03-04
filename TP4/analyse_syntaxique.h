@@ -1,22 +1,28 @@
-#include "analyse_lexicale.h"
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:27:33
- * @LastEditTime: 2023-02-09 09:06:58
+ * @LastEditTime: 2023-03-04 22:27:49
  * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: /INF404/TP2/analyse_syntaxique.h
+ * @FilePath: /TP4/analyse_syntaxique.h
  */
-void rec_expr(int *resultat);
 
-void count_PARO_PARF(int *count_PARO, int *count_PARF);
+#include "analyse_lexicale.h"
+#include "type_ast.h"
+#include "ast_construction.h"
+#include "ast_parcours.h"
 
-void analyser(char *fichier, int *resultat);
+Ast rec_eag();
+Ast rec_seq_terme();
+Ast rec_terme();
+Ast rec_facteur();
+Ast rec_suite_seq_terme(Ast *ag);
+Ast creer_op_unaire(TypeOperateur op, Ast a);
+TypeOperateur rec_op1();
+int evaluer(Ast a);
+
+void analyser(char *fichier, Ast *arbre);
 // -- e.i : indifferent
-// -- e.f : une Expression Arithmetique a ete lue dans fichier
-// -- si elle ne contient pas d'erreur de syntaxe un message est affiche
-// -- sinon le pgm termine sur un message d'erreur
-
-int rank(Nature_Lexeme nature);
-
-int math(int a, int b, Nature_Lexeme nature);
+// -- e.f : une EAG a ete lue dans le fichier de nom nom_fichier
+// -- si elle ne contient pas d’erreur arbre contient son arbre abstrait
+// -- sinon une erreur est signalee

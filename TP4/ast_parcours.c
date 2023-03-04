@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2021-02-10 17:29:52
- * @LastEditTime: 2023-02-22 22:03:02
+ * @LastEditTime: 2023-03-02 09:45:46
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /INF404/TP3/ast_parcours.c
+ * @FilePath: /TP4/ast_parcours.c
  */
 
 #include <stdio.h>
@@ -35,15 +35,15 @@ void aff_operateur(TypeOperateur op)
 	}
 }
 
-void afficher(Ast expr)
+void afficher_ast(Ast expr)
 {
 	switch (expr->nature)
 	{
 	case OPERATION:
 		printf("(");
-		afficher(expr->gauche);
+		afficher_ast(expr->gauche);
 		aff_operateur(expr->operateur);
-		afficher(expr->droite);
+		afficher_ast(expr->droite);
 		printf(")");
 		break;
 	case VALEUR:

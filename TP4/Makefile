@@ -2,8 +2,8 @@
 # test_lexeme: analyse_lexicale.o  lecture_caracteres.o  test_lexeme.o
 # 	gcc -g -Wall -o test_lexeme analyse_lexicale.o  lecture_caracteres.o  test_lexeme.o
 
-calculette: calculette.o analyse_lexicale.o lecture_caracteres.o analyse_syntaxique.o
-	gcc -g -Wall -o calculette calculette.o analyse_lexicale.o lecture_caracteres.o analyse_syntaxique.o
+calculette: calculette.o analyse_lexicale.o lecture_caracteres.o analyse_syntaxique.o ast_construction.o ast_parcours.o
+	gcc -g -Wall -o calculette calculette.o analyse_lexicale.o lecture_caracteres.o analyse_syntaxique.o ast_construction.o ast_parcours.o
 
 analyse_lexicale.o: analyse_lexicale.c analyse_lexicale.h lecture_caracteres.h
 	gcc -g -Wall -c analyse_lexicale.c

@@ -1,10 +1,10 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2023-01-26 08:28:49
- * @LastEditTime: 2023-02-22 21:36:00
+ * @LastEditTime: 2023-03-04 22:31:23
  * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: \INF404\TP2\analyse_syntaxique.c
+ * @FilePath: /TP4/analyse_syntaxique.c
  */
 
 #include <stdio.h>
@@ -12,211 +12,129 @@
 
 #include "analyse_syntaxique.h"
 
-int rank(Nature_Lexeme nature)
+Ast rec_eag()
 {
-    switch (nature)
+    return rec_seq_terme();
+}
+
+Ast rec_seq_terme()
+{
+    Ast a1 = rec_terme();
+    return rec_suite_seq_terme(a1);
+}
+
+Ast rec_terme()
+{
+    return rec_facteur();
+}
+
+Ast rec_facteur()
+{
+    Lexeme LC = lexeme_courant();
+    Ast a;
+    switch (LC.nature)
     {
-    case PLUS:
-    case MOINS:
-        return 2;
-        break;
-    case MUL:
-    case DIV:
-        return 3;
+    case ENTIER:
+        a = creer_valeur(LC.valeur);
+        avancer();
         break;
     case PARO:
-        return 1;
-        break;
-    case PARF:
-        return 4;
-        break;
-    default:
-        return 0;
-        break;
-    }
-}
-
-int math(int a, int b, Nature_Lexeme nature)
-{
-    switch (nature)
-    {
-    case PLUS:
-        return a + b;
+        avancer();
+        a = rec_eag();
+        if (LC.nature == PARF)
+            avancer();
+        else
+            printf("Erreur de syntaxe : ')' attendu ");
         break;
     case MOINS:
-        return a - b;
-        break;
-    case MUL:
-        return a * b;
-        break;
-    case DIV:
-        return a / b;
+        avancer();
+        a = rec_facteur();
+        a = creer_op_unaire(MOINS, a);
         break;
     default:
-        return 0;
+        printf("Erreur de syntaxe : '(', entier ou ')' attendu ");
         break;
     }
+    return a;
 }
 
-void count_PARO_PARF(int *count_PARO, int *count_PARF)
+Ast rec_suite_seq_terme(Ast *ag)
 {
-    Lexeme lexeme_en_cours = lexeme_courant();
-    while (!fin_de_sequence())
+    Ast *ad, *a1;
+    TypeOperateur op;
+    Lexeme LC = lexeme_courant();
+    switch (LC.nature)
     {
-        if (lexeme_en_cours.nature == PARO)
-        {
-            *count_PARO = *count_PARO + 1;
-        }
-        else if (lexeme_en_cours.nature == PARF)
-        {
-            *count_PARF = *count_PARF + 1;
-        }
-        avancer();
-        lexeme_en_cours = lexeme_courant();
+    case PLUS:
+    case MOINS:
+        op = rec_op1();
+        ad = rec_terme();
+        a1 = creer_operation(op, ag, ad);
+        return rec_suite_seq_terme(a1);
+    default:
+        return ag;
     }
 }
 
-void rec_expr(int *resultat){
-    Lexeme lexeme_en_cours = lexeme_courant();
-    if (lexeme_en_cours.nature == ENTIER)
-    {
-        *resultat = lexeme_en_cours.valeur;
-        avancer();
-    }
-    else if (lexeme_en_cours.nature == PARO)
-    {
-        avancer();
-        rec_expr(resultat);
-    }
-    else
-    {
-        printf("Erreur de syntaxe entier \n");
-        exit(1);
-    }
-    while (!fin_de_sequence())
-    {
-        lexeme_en_cours = lexeme_courant();
-        switch (lexeme_en_cours.nature)
-        {
-        case PLUS:
-            avancer();
-            lexeme_en_cours = lexeme_courant();
-            if (lexeme_en_cours.nature == ENTIER)
-            {
-                *resultat = *resultat + lexeme_en_cours.valeur;
-                avancer();
-            }
-            else if (lexeme_en_cours.nature == PARO)
-            {
-                int temp = 0;
-                rec_expr(&temp);
-                *resultat = *resultat + temp;
-            }
-            else
-            {
-                printf("Erreur de syntaxe entier \n");
-                exit(1);
-            }
-            break;
-        case MOINS:
-            avancer();
-            lexeme_en_cours = lexeme_courant();
-            if (lexeme_en_cours.nature == ENTIER)
-            {
-                *resultat = *resultat - lexeme_en_cours.valeur;
-                avancer();
-            }
-            else if (lexeme_en_cours.nature == PARO)
-            {
-                int temp = 0;
-                rec_expr(&temp);
-                *resultat = *resultat - temp;
-            }
-            else
-            {
-                printf("Erreur de syntaxe entier \n");
-                exit(1);
-            }
-            break;
-        case MUL:
-            avancer();
-            lexeme_en_cours = lexeme_courant();
-            if (lexeme_en_cours.nature == ENTIER)
-            {
-                *resultat = *resultat * lexeme_en_cours.valeur;
-                avancer();
-            }
-            else if (lexeme_en_cours.nature == PARO)
-            {
-                int temp = 0;
-                rec_expr(&temp);
-                *resultat = *resultat * temp;
-            }
-            else
-            {
-                printf("Erreur de syntaxe entier \n");
-                exit(1);
-            }
-            break;
-        case DIV:
-            avancer();
-            lexeme_en_cours = lexeme_courant();
-            if (lexeme_en_cours.nature == ENTIER)
-            {
-                if (lexeme_en_cours.valeur == 0)
-                {
-                    printf("Erreur de syntaxe division par 0 \n");
-                    exit(1);
-                }
-                *resultat = *resultat / lexeme_en_cours.valeur;
-                avancer();
-            }
-            else if (lexeme_en_cours.nature == PARO)
-            {
-                int temp = 0;
-                rec_expr(&temp);
-                if (temp == 0)
-                {
-                    printf("Erreur de syntaxe division par 0 \n");
-                    exit(1);
-                }
-                *resultat = *resultat / temp;
-            }
-            else
-            {
-                printf("Erreur de syntaxe entier \n");
-                exit(1);
-            }
-            break;
-        case PARF:
-            avancer();
-            break;
-        default:
-            printf("Erreur de syntaxe \n");
-            exit(1);
-            break;
-        }
-    }
-}
-
-void analyser(char *fichier, int *resultat)
+Ast creer_op_unaire(TypeOperateur op, Ast a)
 {
-    int count_PARO = 0;
-    int count_PARF = 0;
-    demarrer(fichier);
-    count_PARO_PARF(&count_PARO, &count_PARF);
-    if (count_PARO != count_PARF)
+    Ast a1 = (Ast)malloc(sizeof(NoeudAst));
+    a1->nature = OPERATION;
+    a1->operateur = op;
+    a1->gauche = a;
+    a1->droite = NULL;
+    return a1;
+}
+
+TypeOperateur rec_op1()
+{
+    Lexeme LC = lexeme_courant();
+    TypeOperateur op;
+    switch (LC.nature)
     {
-        printf("Erreur de syntaxe: Parantheses non fermées \n");
-        exit(1);
+    case PLUS:
+        op = N_PLUS;
+        avancer();
+        break;
+    case MOINS:
+        op = N_MOINS;
+        avancer();
+        break;
+    default:
+        printf("Erreur de syntaxe : '+' ou '-' attendu ");
+        break;
     }
-    printf("Count PARO: %d \n", count_PARO);
-    printf("Count PARF: %d \n", count_PARF);
-    demarrer(fichier);
-    rec_expr(resultat);
-    if (!fin_de_sequence())
+    return op;
+}
+
+int evaluer(Ast a)
+{
+    int vg, vd;
+    switch (a->nature)
     {
-        printf("Erreur de syntaxe \n");
-        exit(1);
+    case VALEUR:
+        return a->valeur;
+    case OPERATION:
+        vg = evaluer(a->gauche);
+        vd = evaluer(a->droite);
+        switch (a->operateur)
+        {
+        case N_PLUS:
+            return vg + vd;
+        case N_MOINS:
+            return vg - vd;
+        case N_MUL:
+            return vg * vd;
+        case N_DIV:
+            return vg / vd;
+        }
     }
+}
+
+void analyser(char *fichier, Ast *arbre)
+{
+    demarrer(fichier);
+    *arbre = rec_eag();
+    int resultat = evaluer(*arbre);
+    printf("Resultat : %d ", resultat);
 }

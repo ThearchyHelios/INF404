@@ -1,10 +1,10 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-02-09 08:42:56
- * @LastEditors: JIANG Yilun
+ * @LastEditTime: 2023-03-02 09:43:43
+ * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: /INF404/TP2/analyse_lexicale.h
+ * @FilePath: /TP4/analyse_lexicale.h
  */
 /* ------------------------------------------------------------------------
 -- paquetage machine_lexemes
@@ -46,7 +46,7 @@ typedef struct
     int valeur;           // valeur d'un entier
 } Lexeme;
 
-void afficher(Lexeme l);
+void afficher_lexeme(Lexeme l);
 
 void demarrer(char *nom_fichier);
 // e.i. : indifferent

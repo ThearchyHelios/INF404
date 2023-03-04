@@ -1,10 +1,10 @@
 /*
  * @Author: JIANG Yilun, Kante MAMADOU Diouhe
  * @Date: 2021-01-25 14:43:51
- * @LastEditTime: 2023-02-09 08:57:59
+ * @LastEditTime: 2023-03-02 09:43:31
  * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: /INF404/TP2/analyse_lexicale.c
+ * @FilePath: /TP4/analyse_lexicale.c
  */
 /* ------------------------------------------------------------------------
 -- paquetage analyse_lexicale
@@ -295,7 +295,7 @@ char *Nature_vers_Chaine(Nature_Lexeme nature)
 /* --------------------------------------------------------------------- */
 
 // affiche a l'ecran le lexeme l
-void afficher(Lexeme l)
+void afficher_lexeme(Lexeme l)
 {
 
     switch (l.nature)
