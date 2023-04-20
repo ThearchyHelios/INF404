@@ -1,0 +1,1 @@
+IF (4) > (2) THEN x = 3 ELSE x = 4 fi;
