@@ -8,7 +8,6 @@ typedef enum
     BOLD,
     ITALIC,
     LINK,
-    BLOD_ITALIC,
 } NodeType;
 
 typedef struct Node

@@ -11,6 +11,7 @@ void parse(AST *ast, char *output) {
     int header_level = 0;
     int bold_open = 0;
     int italic_open = 0;
+    int blod_italic_open = 0;
 
     while (node != NULL) {
         switch (node->type) {
