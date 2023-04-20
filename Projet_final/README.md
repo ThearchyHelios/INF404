@@ -6,7 +6,7 @@ date: 20-04-2023
 
 # H1
 
-this is **strong** and this is *italic* and this is ***strong and italic***
+this is **strong** and this is *italic* and this is ***strong and italic*** and this is ~~strikethrough~~
 
 ## H2
 
@@ -15,14 +15,12 @@ hello, hello, hello
 
 #### H4
 
-[google](https://google.com)
+> This is a code block
 
-##### H5
+```python
+def hello():
+    print("hello")
+```
 
-###### H6
-
-> this is a quote
->
-
-
+~hello~
 

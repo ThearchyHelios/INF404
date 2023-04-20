@@ -1,3 +1,11 @@
+/*
+ * @Author: ThearchyHelios (Yilun JIANG)
+ * @Date: 2023-04-19 21:29:53
+ * @LastEditTime: 2023-04-20 12:11:12
+ * @LastEditors: ThearchyHelios
+ * @Description: 
+ * @FilePath: /Projet_final/parser.c
+ */
 #include <string.h>
 #include <stdio.h>
 #include "parser.h"
@@ -11,7 +19,9 @@ void parse(AST *ast, char *output) {
     int header_level = 0;
     int bold_open = 0;
     int italic_open = 0;
-    int blod_italic_open = 0;
+    int quote_open = 0;
+    int strike_through_open = 0;
+    int sub_open = 0;
 
     while (node != NULL) {
         switch (node->type) {
@@ -52,6 +62,37 @@ void parse(AST *ast, char *output) {
                 output_idx += strlen(output + output_idx);
                 break;
             }
+
+            case QUOTE:
+                if (!quote_open) {
+                    strcpy(output + output_idx, "<blockquote>");
+                    quote_open = 1;
+                } else {
+                    strcpy(output + output_idx, "</blockquote>");
+                    quote_open = 0;
+                }
+                output_idx += strlen(output + output_idx);
+                break;
+            case STRIKETHROUGH:
+                if (!strike_through_open) {
+                    strcpy(output + output_idx, "<s>");
+                    strike_through_open = 1;
+                } else {
+                    strcpy(output + output_idx, "</s>");
+                    strike_through_open = 0;
+                }
+                output_idx += strlen(output + output_idx);
+                break;
+            case SUB:
+                if (!sub_open) {
+                    strcpy(output + output_idx, "<sub>");
+                    sub_open = 1;
+                } else {
+                    strcpy(output + output_idx, "</sub>");
+                    sub_open = 0;
+                }
+                output_idx += strlen(output + output_idx);
+                break;
         }
 
         node = node->next;
@@ -68,6 +109,18 @@ void parse(AST *ast, char *output) {
     }
     if (italic_open) {
         strcpy(output + output_idx, "</em>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (quote_open) {
+        strcpy(output + output_idx, "</blockquote>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (strike_through_open) {
+        strcpy(output + output_idx, "</s>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (sub_open) {
+        strcpy(output + output_idx, "</sub>");
         output_idx += strlen(output + output_idx);
     }
 

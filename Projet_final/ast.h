@@ -1,3 +1,11 @@
+/*
+ * @Author: ThearchyHelios (Yilun JIANG)
+ * @Date: 2023-04-19 22:01:10
+ * @LastEditTime: 2023-04-20 12:10:30
+ * @LastEditors: ThearchyHelios
+ * @Description: 
+ * @FilePath: /Projet_final/ast.h
+ */
 #ifndef __AST_H__
 #define __AST_H__
 
@@ -8,6 +16,9 @@ typedef enum
     BOLD,
     ITALIC,
     LINK,
+    QUOTE,
+    STRIKETHROUGH,
+    SUB,
 } NodeType;
 
 typedef struct Node

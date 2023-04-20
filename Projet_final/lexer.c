@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-20 11:32:36
+ * @LastEditTime: 2023-04-20 12:13:12
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /Projet_final/lexer.c
@@ -80,7 +80,24 @@ AST *lex(const char *input)
             }
             break;
         }
-
+        case '>':
+        {
+            append_node(ast, create_node(QUOTE, ">"));
+            break;
+        }
+        case '~':
+        {
+            if (input[i + 1] == '~')
+            {
+                append_node(ast, create_node(STRIKETHROUGH, "~~"));
+                ++i;
+            }
+            else
+            {
+                append_node(ast, create_node(SUB, "~"));
+            }
+            break;
+        }
         default:
         {
             char value[2] = {input[i], '\0'};
