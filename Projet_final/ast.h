@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-20 12:10:30
+ * @LastEditTime: 2023-04-21 10:47:52
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /Projet_final/ast.h
@@ -19,6 +19,7 @@ typedef enum
     QUOTE,
     STRIKETHROUGH,
     SUB,
+    IMG,
 } NodeType;
 
 typedef struct Node

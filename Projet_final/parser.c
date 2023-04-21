@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-20 12:11:12
+ * @LastEditTime: 2023-04-21 10:51:13
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /Projet_final/parser.c
@@ -22,6 +22,7 @@ void parse(AST *ast, char *output) {
     int quote_open = 0;
     int strike_through_open = 0;
     int sub_open = 0;
+    int img_open = 0;
 
     while (node != NULL) {
         switch (node->type) {
@@ -93,6 +94,15 @@ void parse(AST *ast, char *output) {
                 }
                 output_idx += strlen(output + output_idx);
                 break;
+            case IMG: {
+                char img_text[256];
+                char img_url[256];
+
+                sscanf(node->value, "![%255[^]]](%255[^)])", img_text, img_url);
+                sprintf(output + output_idx, "<br><img src=\"%s\" alt=\"%s\">", img_url, img_text);
+                output_idx += strlen(output + output_idx);
+                break;
+            }
         }
 
         node = node->next;
@@ -121,6 +131,10 @@ void parse(AST *ast, char *output) {
     }
     if (sub_open) {
         strcpy(output + output_idx, "</sub>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (img_open) {
+        strcpy(output + output_idx, "</img>");
         output_idx += strlen(output + output_idx);
     }
 

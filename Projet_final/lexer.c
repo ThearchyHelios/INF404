@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-20 12:13:12
+ * @LastEditTime: 2023-04-21 10:48:57
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /Projet_final/lexer.c
@@ -95,6 +95,39 @@ AST *lex(const char *input)
             else
             {
                 append_node(ast, create_node(SUB, "~"));
+            }
+            break;
+        }
+        case '!':
+        {
+            if (input[i + 1] == '[')
+            {
+                size_t j = i + 2;
+                while (j < len && input[j] != ']')
+                {
+                    ++j;
+                }
+                if (j < len && input[j + 1] == '(')
+                {
+                    size_t k = j + 2;
+                    while (k < len && input[k] != ')')
+                    {
+                        ++k;
+                    }
+                    if (k < len)
+                    {
+                        append_node(ast, create_node(IMG, input + i));
+                        i = k;
+                    }
+                }
+                else
+                {
+                    append_node(ast, create_node(TEXT, "!"));
+                }
+            }
+            else
+            {
+                append_node(ast, create_node(TEXT, "!"));
             }
             break;
         }
