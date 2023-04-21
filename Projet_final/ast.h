@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-21 10:47:52
+ * @LastEditTime: 2023-04-21 10:57:14
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /Projet_final/ast.h
@@ -20,6 +20,8 @@ typedef enum
     STRIKETHROUGH,
     SUB,
     IMG,
+    LI,
+    UL, // Unordered list
 } NodeType;
 
 typedef struct Node

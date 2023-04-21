@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-21 10:51:13
+ * @LastEditTime: 2023-04-21 11:03:33
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /Projet_final/parser.c
@@ -23,6 +23,8 @@ void parse(AST *ast, char *output) {
     int strike_through_open = 0;
     int sub_open = 0;
     int img_open = 0;
+    int ul_open = 0;
+    int li_open = 0;
 
     while (node != NULL) {
         switch (node->type) {
@@ -103,6 +105,27 @@ void parse(AST *ast, char *output) {
                 output_idx += strlen(output + output_idx);
                 break;
             }
+            case UL:
+            // add LI to UL
+                if (!ul_open) {
+                    strcpy(output + output_idx, "<ul>");
+                    ul_open = 1;
+                } else {
+                    strcpy(output + output_idx, "</ul>");
+                    ul_open = 0;
+                }
+                output_idx += strlen(output + output_idx);
+                break;
+            case LI:
+                if (!li_open) {
+                    strcpy(output + output_idx, "<li>");
+                    li_open = 1;
+                } else {
+                    strcpy(output + output_idx, "</li>");
+                    li_open = 0;
+                }
+                output_idx += strlen(output + output_idx);
+                break;
         }
 
         node = node->next;
@@ -135,6 +158,14 @@ void parse(AST *ast, char *output) {
     }
     if (img_open) {
         strcpy(output + output_idx, "</img>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (ul_open) {
+        strcpy(output + output_idx, "</ul>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (li_open) {
+        strcpy(output + output_idx, "</li>");
         output_idx += strlen(output + output_idx);
     }
 
