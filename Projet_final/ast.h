@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-21 10:57:14
+ * @LastEditTime: 2023-04-29 14:36:38
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /Projet_final/ast.h
+ * @FilePath: /INF404/Projet_final/ast.h
  */
 #ifndef __AST_H__
 #define __AST_H__
@@ -22,6 +22,9 @@ typedef enum
     IMG,
     LI,
     UL, // Unordered list
+    UL_CLOSE, // Unordered list close
+    OL, // Ordered list
+    BR, // Line break
 } NodeType;
 
 typedef struct Node

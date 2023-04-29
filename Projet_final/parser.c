@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-21 11:03:33
+ * @LastEditTime: 2023-04-29 18:54:37
  * @LastEditors: ThearchyHelios
- * @Description: 
- * @FilePath: /Projet_final/parser.c
+ * @Description:
+ * @FilePath: /INF404/Projet_final/parser.c
  */
 #include <string.h>
 #include <stdio.h>
@@ -13,7 +13,8 @@
 
 // 在 parser.c 中的 parse 函数中，我们从抽象语法树（AST）中读取节点，并将其转换为相应的 HTML 标签。
 
-void parse(AST *ast, char *output) {
+void parse(AST *ast, char *output)
+{
     Node *node = ast->head;
     size_t output_idx = 0;
     int header_level = 0;
@@ -25,150 +26,258 @@ void parse(AST *ast, char *output) {
     int img_open = 0;
     int ul_open = 0;
     int li_open = 0;
+    int ordered_list_level = 0;
+    int yaml_open = 0;
+    int unordered_list_level = 0;
+    int new_level = 0;
+    int list_level = 0;
 
-    while (node != NULL) {
-        switch (node->type) {
-            case TEXT:
-                output[output_idx++] = node->value[0];
-                break;
-            case HEADER:
-                sscanf(node->value, "h%d", &header_level);
-                sprintf(output + output_idx, "<%s>", node->value);
-                output_idx += strlen(output + output_idx);
-                break;
-            case BOLD:
-                if (!bold_open) {
-                    strcpy(output + output_idx, "<strong>");
-                    bold_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</strong>");
-                    bold_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case ITALIC:
-                if (!italic_open) {
-                    strcpy(output + output_idx, "<em>");
-                    italic_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</em>");
-                    italic_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case LINK: {
-                char link_text[256];
-                char link_url[256];
+    while (node != NULL)
+    {
+        switch (node->type)
+        {
+        case TEXT:
+            output[output_idx++] = node->value[0];
+            break;
+        case HEADER:
+            sscanf(node->value, "h%d", &header_level);
+            sprintf(output + output_idx, "<%s>", node->value);
+            output_idx += strlen(output + output_idx);
+            break;
+        case BOLD:
+            if (!bold_open)
+            {
+                strcpy(output + output_idx, "<strong>");
+                bold_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</strong>");
+                bold_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case ITALIC:
+            if (!italic_open)
+            {
+                strcpy(output + output_idx, "<em>");
+                italic_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</em>");
+                italic_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case LINK:
+        {
+            char link_text[256];
+            char link_url[256];
 
-                sscanf(node->value, "[%255[^]]](%255[^)])", link_text, link_url);
-                sprintf(output + output_idx, "<a href=\"%s\">%s</a>", link_url, link_text);
+            sscanf(node->value, "[%255[^]]](%255[^)])", link_text, link_url);
+            sprintf(output + output_idx, "<a href=\"%s\">%s</a>", link_url, link_text);
+            output_idx += strlen(output + output_idx);
+            break;
+        }
+
+        case QUOTE:
+            if (!quote_open)
+            {
+                strcpy(output + output_idx, "<blockquote>");
+                quote_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</blockquote>");
+                quote_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case STRIKETHROUGH:
+            if (!strike_through_open)
+            {
+                strcpy(output + output_idx, "<s>");
+                strike_through_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</s>");
+                strike_through_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case SUB:
+            if (!sub_open)
+            {
+                strcpy(output + output_idx, "<sub>");
+                sub_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</sub>");
+                sub_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case IMG:
+        {
+            char img_text[256];
+            char img_url[256];
+
+            sscanf(node->value, "![%255[^]]](%255[^)])", img_text, img_url);
+            sprintf(output + output_idx, "<br><img src=\"%s\" alt=\"%s\">", img_url, img_text);
+            output_idx += strlen(output + output_idx);
+            break;
+        }
+        case UL:
+            strcpy(output + output_idx, "<ul>");
+            unordered_list_level++;
+            output_idx += strlen(output + output_idx);
+            break;
+        case UL_CLOSE:
+            strcpy(output + output_idx, "</ul>");
+            unordered_list_level--;
+            output_idx += strlen(output + output_idx);
+            break;
+        // case LI:
+        //     if (!li_open)
+        //     {
+        //         strcpy(output + output_idx, "<li>");
+        //         li_open = 1;
+        //     }
+        //     else
+        //     {
+        //         strcpy(output + output_idx, "</li>");
+        //         li_open = 0;
+        //     }
+        //     output_idx += strlen(output + output_idx);
+        //     break;
+        case LI:
+        {
+            int new_level;
+            sscanf(node->value, "li-%d", &new_level);
+
+            if (new_level > list_level)
+            {
+                for (int i = list_level; i < new_level; ++i)
+                {
+                    strcpy(output + output_idx, "<ul><li>");
+                    output_idx += strlen(output + output_idx);
+                }
+            }
+            else if (new_level < list_level)
+            {
+                for (int i = new_level; i < list_level; ++i)
+                {
+                    strcpy(output + output_idx, "</li></ul>");
+                    output_idx += strlen(output + output_idx);
+                }
+                strcpy(output + output_idx, "</li><li>");
                 output_idx += strlen(output + output_idx);
-                break;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</li><li>");
+                output_idx += strlen(output + output_idx);
             }
 
-            case QUOTE:
-                if (!quote_open) {
-                    strcpy(output + output_idx, "<blockquote>");
-                    quote_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</blockquote>");
-                    quote_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case STRIKETHROUGH:
-                if (!strike_through_open) {
-                    strcpy(output + output_idx, "<s>");
-                    strike_through_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</s>");
-                    strike_through_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case SUB:
-                if (!sub_open) {
-                    strcpy(output + output_idx, "<sub>");
-                    sub_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</sub>");
-                    sub_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case IMG: {
-                char img_text[256];
-                char img_url[256];
+            list_level = new_level;
+            break;
+        }
+        // case OL:
+        // {
+        //     int new_level;
+        //     sscanf(node->value, "ol-%d", &new_level);
 
-                sscanf(node->value, "![%255[^]]](%255[^)])", img_text, img_url);
-                sprintf(output + output_idx, "<br><img src=\"%s\" alt=\"%s\">", img_url, img_text);
-                output_idx += strlen(output + output_idx);
-                break;
-            }
-            case UL:
-            // add LI to UL
-                if (!ul_open) {
-                    strcpy(output + output_idx, "<ul>");
-                    ul_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</ul>");
-                    ul_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
-            case LI:
-                if (!li_open) {
-                    strcpy(output + output_idx, "<li>");
-                    li_open = 1;
-                } else {
-                    strcpy(output + output_idx, "</li>");
-                    li_open = 0;
-                }
-                output_idx += strlen(output + output_idx);
-                break;
+        //     if (new_level > ordered_list_level)
+        //     {
+        //         for (int i = ordered_list_level; i < new_level; ++i)
+        //         {
+        //             strcpy(output + output_idx, "<ol><li>");
+        //             output_idx += strlen(output + output_idx);
+        //         }
+        //     }
+        //     else if (new_level < ordered_list_level)
+        //     {
+        //         for (int i = new_level; i < ordered_list_level; ++i)
+        //         {
+        //             strcpy(output + output_idx, "</li></ol>");
+        //             output_idx += strlen(output + output_idx);
+        //         }
+        //         strcpy(output + output_idx, "</li><li>");
+        //         output_idx += strlen(output + output_idx);
+        //     }
+        //     else
+        //     {
+        //         strcpy(output + output_idx, "</li><li>");
+        //         output_idx += strlen(output + output_idx);
+        //     }
+
+        //     ordered_list_level = new_level;
+        //     break;
+        // }
+        case BR:
+            // TODO: 此处可能可以修改：<br> 在检测到headings 可以不进行换行
+            strcpy(output + output_idx, "<br>");
+            output_idx += strlen(output + output_idx);
+            break;
         }
 
         node = node->next;
     }
 
     // Close open tags at the end of the input
-    if (header_level > 0) {
+    if (header_level > 0)
+    {
         sprintf(output + output_idx, "</h%d>", header_level);
         output_idx += strlen(output + output_idx);
     }
-    if (bold_open) {
+    if (bold_open)
+    {
         strcpy(output + output_idx, "</strong>");
         output_idx += strlen(output + output_idx);
     }
-    if (italic_open) {
+    if (italic_open)
+    {
         strcpy(output + output_idx, "</em>");
         output_idx += strlen(output + output_idx);
     }
-    if (quote_open) {
+    if (quote_open)
+    {
         strcpy(output + output_idx, "</blockquote>");
         output_idx += strlen(output + output_idx);
     }
-    if (strike_through_open) {
+    if (strike_through_open)
+    {
         strcpy(output + output_idx, "</s>");
         output_idx += strlen(output + output_idx);
     }
-    if (sub_open) {
+    if (sub_open)
+    {
         strcpy(output + output_idx, "</sub>");
         output_idx += strlen(output + output_idx);
     }
-    if (img_open) {
+    if (img_open)
+    {
         strcpy(output + output_idx, "</img>");
         output_idx += strlen(output + output_idx);
     }
-    if (ul_open) {
-        strcpy(output + output_idx, "</ul>");
-        output_idx += strlen(output + output_idx);
-    }
-    if (li_open) {
+    // if (ul_open)
+    // {
+    //     strcpy(output + output_idx, "</ul>");
+    //     output_idx += strlen(output + output_idx);
+    // }
+    if (li_open)
+    {
         strcpy(output + output_idx, "</li>");
         output_idx += strlen(output + output_idx);
     }
-
+    // for (int i = 0; i < unordered_list_level; ++i)
+    // {
+    //     strcpy(output + output_idx, "</ul>");
+    //     output_idx += strlen(output + output_idx);
+    // }
     output[output_idx] = '\0';
 }
 
