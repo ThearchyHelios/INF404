@@ -32,6 +32,8 @@ Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du nav
   - [ ] Gestion des codes
     - [x] Gestion des codes en ligne
     - [ ] Gestions des blocs de codes (BUG)
+  - [x] Gestion des images
+  - [x] Gestion des Checkbox
   - [ ] CSS support
 - [x] Affichage des fichiers HTML dans un navigateur web
 

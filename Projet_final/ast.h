@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-30 14:45:25
+ * @LastEditTime: 2023-04-30 16:25:27
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/Projet_final/ast.h
@@ -27,6 +27,8 @@ typedef enum
     BR, // Line break
     CODE, // Code `code`
     CODE_BLOCK, // Code block ```code```
+    CHECKED_BOX, // [x]
+    UNCHECKED_BOX, // [ ]
 } NodeType;
 
 typedef struct Node

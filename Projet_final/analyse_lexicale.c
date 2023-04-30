@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 15:53:39
+ * @LastEditTime: 2023-04-30 16:35:42
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
@@ -181,6 +181,16 @@ AST *lex(const char *input)
                         append_node(ast, create_node(UL_CLOSE, "\t"));
                     }
                     tabs_before_dash = tabs_before_dash_after;
+                }
+                if (input[i + 2] == '[' && input[i + 3] == 'x' && input[i + 4] == ']')
+                {
+                    append_node(ast, create_node(CHECKED_BOX, "[x]"));
+                    i += 4;
+                }
+                else if (input[i + 2] == '[' && input[i + 3] == ' ' && input[i + 4] == ']')
+                {
+                    append_node(ast, create_node(UNCHECKED_BOX, "[ ]"));
+                    i += 4;
                 }
                 append_node(ast, create_node(LI, "-"));
                 ++i;

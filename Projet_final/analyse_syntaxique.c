@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 15:27:53
+ * @LastEditTime: 2023-04-30 16:30:31
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/Projet_final/analyse_syntaxique.c
@@ -187,8 +187,15 @@ void parse(AST *ast, char *output)
             }
             output_idx += strlen(output + output_idx);
             break;
+        case CHECKED_BOX:
+            strcpy(output + output_idx, "<input type=\"checkbox\" checked>");
+            output_idx += strlen(output + output_idx);
+            break;
+        case UNCHECKED_BOX:
+            strcpy(output + output_idx, "<input type=\"checkbox\">");
+            output_idx += strlen(output + output_idx);
+            break;
         }
-
         node = node->next;
     }
 
