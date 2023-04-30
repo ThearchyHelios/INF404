@@ -1,6 +1,8 @@
 # Interpréteur de Markdown en HTML
 Un projet qui compile les fichiers markdown en fichiers HTML et les affiche dans un navigateur web.
 
+![Markdown to HTML](https://thearchyhelios.com/images/INF404/Markdown%20to%20HTML.png)
+
 ## Requirements
 Vous devez disposer des logiciels suivants pour utiliser le projet:
 - gcc
@@ -8,14 +10,11 @@ Vous devez disposer des logiciels suivants pour utiliser le projet:
 
 ## Utilisation
 1. Ouvez un terminal et placez vous dans le dossier du projet
-2. Fonctionner le Makefile avec la commande ` make `:
-```
-make
-```
-3. Lancer le programme avec la commande ` ./markdown <fichier markdown> `:
-```
-./markdown test/test.md
-```
+2. Fonctionner le Makefile avec la commande ` make `.
+3. Lancer le programme avec la commande ` ./markdown + fichier_markdown `:
+
+Ex: `./markdown test/test.md`
+
 Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du navigateur par défaut.
 
 ## Fonctionnalités
@@ -29,8 +28,12 @@ Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du nav
   - [x] Gestion des liens
   - [ ] Gestion des listes
     - [x] Gestion des listes non ordonnées
-    - [ ] Gestion des listes ordonnées
+    - [ ] Gestion des listes ordonnées (BUG: les listes ordonnées ne sont pas affichées correctement)
+  - [ ] Gestion des codes
+    - [x] Gestion des codes en ligne
+    - [ ] Gestions des blocs de codes (BUG)
   - [ ] CSS support
+- [x] Affichage des fichiers HTML dans un navigateur web
 
 ## Références
 - [Markdown: Syntax](https://daringfireball.net/projects/markdown/syntax)
