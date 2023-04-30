@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-29 14:36:38
+ * @LastEditTime: 2023-04-30 14:45:25
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/Projet_final/ast.h
@@ -25,6 +25,8 @@ typedef enum
     UL_CLOSE, // Unordered list close
     OL, // Ordered list
     BR, // Line break
+    CODE, // Code `code`
+    CODE_BLOCK, // Code block ```code```
 } NodeType;
 
 typedef struct Node

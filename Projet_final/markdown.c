@@ -1,22 +1,23 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-20 11:43:05
+ * @LastEditTime: 2023-04-30 14:26:39
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /Projet_final/markdown.c
+ * @FilePath: /INF404/Projet_final/markdown.c
  */
 #include <stdio.h>
 #include <string.h>
-#include "lexer.h"
-#include "parser.h"
+#include <stdlib.h>
+#include "analyse_lexicale.h"
+#include "analyse_syntaxique.h"
 
-int main()
+int main(int argc, char const *argv[])
 {
     char input[1024];
     char output[2048];
     // open a file
-    FILE *fp = fopen("README.md", "r");
+    FILE *fp = fopen(argv[1], "r");
     if (fp == NULL)
     {
         printf("Error opening file: %s", "test.md");
@@ -35,7 +36,7 @@ int main()
             printf("%s", output);
             // free the ast
             free_ast(ast);
-            // write the output to a file
+            // write the output to a file in the same directory of the input file
             FILE *fp2 = fopen("output.html", "a");
             if (fp2 == NULL)
             {
@@ -47,5 +48,13 @@ int main()
             }
         }
         fclose(fp);
+        const char *filename = "output.html";
+        // Use default browser to open the output file
+        const char *command = "open %s";
+        char* full_commande = (char*)malloc(strlen(command) + strlen(filename) + 1);
+        sprintf(full_commande, command, filename);
+        system(full_commande);
+        free(full_commande);
     }
+    return 0;
 }

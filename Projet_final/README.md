@@ -1,26 +1,40 @@
+# Interpréteur de Markdown en HTML
+Un projet qui compile les fichiers markdown en fichiers HTML et les affiche dans un navigateur web.
 
-# H1
-this is **strong** and this is *italic* and this is ***strong and italic*** and this is ~~strikethrough~~
-## H2
-### H3
-hello, hello, hello
-#### H4
-> This is a code block
-~hello~
-![photo](https://thearchyhelios.com/images/%E6%9D%82%E9%A1%B9/trash.png)
+## Requirements
+Vous devez disposer des logiciels suivants pour utiliser le projet:
+- gcc
+- make
 
-- Unordered list
-- list 2
-	- List 2.1
-		- List 2.1.1
-			- List 2.1.1.1
-			- List 2.1.1.2
-    	- List 2.1.2
-	- list 2.2
-    	- List 2.2.1
-- list 3
-- list 4
+## Utilisation
+1. Ouvez un terminal et placez vous dans le dossier du projet
+2. Fonctionner le Makefile avec la commande `make`:
+```shell
+make
+```
+3. Lancer le programme avec la commande `./markdown <fichier markdown>`:
+```shell
+./markdown test/test.md
+```
+Cette commande génère un fichier `output.html` et l'affiche à l'aide du navigateur par défaut.
 
-1. 111
-2. 222
-3. 333
+## Fonctionnalités
+- [ ] Génération de fichiers HTML à partir de fichiers markdown
+  - [x] Gestion des titres
+  - [x] Gestion des font styles
+    - [x] Gestion du gras
+    - [x] Gestion de l'italique
+    - [x] Gestion du gras et de l'italique
+    - [x] Gestion du barré
+  - [x] Gestion des liens
+  - [ ] Gestion des listes
+    - [x] Gestion des listes non ordonnées
+    - [ ] Gestion des listes ordonnées
+  - [ ] CSS support
+
+## Références
+- [Markdown: Syntax](https://daringfireball.net/projects/markdown/syntax)
+- [Markdown cheat sheet](https://www.markdownguide.org/cheat-sheet/)
+
+## Auteurs
+- [JIANG Yilun](https://thearchyhelios.com)
