@@ -8,15 +8,15 @@ Vous devez disposer des logiciels suivants pour utiliser le projet:
 
 ## Utilisation
 1. Ouvez un terminal et placez vous dans le dossier du projet
-2. Fonctionner le Makefile avec la commande `make`:
-```shell
+2. Fonctionner le Makefile avec la commande ` make `:
+```
 make
 ```
-3. Lancer le programme avec la commande `./markdown <fichier markdown>`:
-```shell
+3. Lancer le programme avec la commande ` ./markdown <fichier markdown> `:
+```
 ./markdown test/test.md
 ```
-Cette commande génère un fichier `output.html` et l'affiche à l'aide du navigateur par défaut.
+Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du navigateur par défaut.
 
 ## Fonctionnalités
 - [ ] Génération de fichiers HTML à partir de fichiers markdown

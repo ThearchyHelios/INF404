@@ -1,10 +1,10 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:02:59
- * @LastEditTime: 2023-04-19 22:02:59
+ * @LastEditTime: 2023-04-30 14:58:34
  * @LastEditors: ThearchyHelios
  * @Description: 
- * @FilePath: /Projet_final/ast.c
+ * @FilePath: /INF404/Projet_final/ast.c
  */
 #include <stdlib.h>
 #include <string.h>
@@ -65,3 +65,4 @@ void free_ast(AST *ast)
 }
 
 // 这些函数可以帮助您处理 AST 中的节点，包括创建、追加、释放节点以及处理整个 AST。通过这些函数，您可以更轻松地管理和扩展 Markdown 解析器的功能。
+// 

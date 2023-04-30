@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 12:59:26
+ * @LastEditTime: 2023-04-30 15:26:30
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
@@ -169,22 +169,41 @@ AST *lex(const char *input)
                 // 如果当前行的 tab 数量大于上一行的 tab 数量，那么就进入 UL 列表嵌套，使用UL
                 // 如果当前行的 tab 数量小于上一行的 tab 数量，那么就退出 UL 列表嵌套，使用UL_CLOSE
                 // 可以使用tabs_before_dash_old来记录上一行的 tab 数量
-                if (tabs_before_dash_after > tabs_before_dash_old)
+                // 需要添加LI 列表项，使用LI
+                // if (tabs_before_dash_after > tabs_before_dash_old)
+                // {
+                //     for (int j = 0; j < tabs_before_dash_after - tabs_before_dash_old; ++j)
+                //     {
+                //         append_node(ast, create_node(UL, "\t"));
+                //     }
+                //     tabs_before_dash_old = tabs_before_dash_after;
+                // }
+                // else if (tabs_before_dash_after < tabs_before_dash_old)
+                // {
+                //     for (int j = 0; j < tabs_before_dash_old - tabs_before_dash_after; ++j)
+                //     {
+                //         append_node(ast, create_node(UL_CLOSE, "\t"));
+                //     }
+                //     tabs_before_dash_old = tabs_before_dash_after;
+                // }
+                if (tabs_before_dash_after > tab_before_dash_before)
                 {
-                    for (int j = 0; j < tabs_before_dash_after - tabs_before_dash_old; ++j)
+                    for (int j = 0; j < tabs_before_dash_after - tab_before_dash_before; ++j)
                     {
                         append_node(ast, create_node(UL, "\t"));
                     }
-                    tabs_before_dash_old = tabs_before_dash_after;
+                    tabs_before_dash = tabs_before_dash_after;
                 }
-                else if (tabs_before_dash_after < tabs_before_dash_old)
+                else if (tabs_before_dash_after < tab_before_dash_before)
                 {
-                    for (int j = 0; j < tabs_before_dash_old - tabs_before_dash_after; ++j)
+                    for (int j = 0; j < tab_before_dash_before - tabs_before_dash_after; ++j)
                     {
                         append_node(ast, create_node(UL_CLOSE, "\t"));
                     }
-                    tabs_before_dash_old = tabs_before_dash_after;
+                    tabs_before_dash = tabs_before_dash_after;
                 }
+                append_node(ast, create_node(LI, "-"));
+                ++i;
             }
             else
             {
@@ -211,6 +230,36 @@ AST *lex(const char *input)
             {
                 append_node(ast, create_node(BR, "\n"));
             }
+            break;
+        }
+        case '`':
+        {
+            // 两种情况：代码块 ```CODE_BLOCK``` 和代码 `code`
+            // 如果是代码块，那么就将所有```之间的内容都作为代码块的内容
+            // 如果是代码，那么就将`之间的内容作为代码的内容
+            size_t j = i + 1;
+            while (j < len && input[j] != '`')
+            {
+                ++j;
+            }
+            if (j < len && input[j + 1] == '`' && input[j + 2] == '`')
+            {
+                size_t k = j + 3;
+                while (k < len && input[k] != '`')
+                {
+                    ++k;
+                }
+                if (k < len)
+                {
+                    append_node(ast, create_node(CODE_BLOCK, input + i));
+                    i = k;
+                }
+            }
+            else
+            {
+                append_node(ast, create_node(CODE, "`"));
+            }
+            break;
         }
         default:
         {

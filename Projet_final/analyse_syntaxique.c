@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 12:50:14
+ * @LastEditTime: 2023-04-30 15:27:53
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/Projet_final/analyse_syntaxique.c
@@ -31,6 +31,8 @@ void parse(AST *ast, char *output)
     int unordered_list_level = 0;
     int new_level = 0;
     int list_level = 0;
+    int code_block_open = 0;
+    int code_open = 0;
 
     while (node != NULL)
     {
@@ -142,38 +144,47 @@ void parse(AST *ast, char *output)
             break;
         case LI:
         {
-            int new_level;
-            sscanf(node->value, "li-%d", &new_level);
-
-            if (new_level > list_level)
+            if (!li_open)
             {
-                for (int i = list_level; i < new_level; ++i)
-                {
-                    strcpy(output + output_idx, "<ul><li>");
-                    output_idx += strlen(output + output_idx);
-                }
-            }
-            else if (new_level < list_level)
-            {
-                for (int i = new_level; i < list_level; ++i)
-                {
-                    strcpy(output + output_idx, "</li></ul>");
-                    output_idx += strlen(output + output_idx);
-                }
-                strcpy(output + output_idx, "</li><li>");
-                output_idx += strlen(output + output_idx);
+                strcpy(output + output_idx, "<li>");
+                li_open = 1;
             }
             else
             {
-                strcpy(output + output_idx, "</li><li>");
-                output_idx += strlen(output + output_idx);
+                strcpy(output + output_idx, "</li>");
+                li_open = 0;
             }
-
-            list_level = new_level;
+            output_idx += strlen(output + output_idx);
             break;
         }
         case BR:
             strcpy(output + output_idx, "<br>");
+            output_idx += strlen(output + output_idx);
+            break;
+        case CODE_BLOCK:
+            if (!code_block_open)
+            {
+                strcpy(output + output_idx, "<pre><code>");
+                code_block_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</code></pre>");
+                code_block_open = 0;
+            }
+            output_idx += strlen(output + output_idx);
+            break;
+        case CODE:
+            if (!code_open)
+            {
+                strcpy(output + output_idx, "<code>");
+                code_open = 1;
+            }
+            else
+            {
+                strcpy(output + output_idx, "</code>");
+                code_open = 0;
+            }
             output_idx += strlen(output + output_idx);
             break;
         }
@@ -220,6 +231,16 @@ void parse(AST *ast, char *output)
     if (li_open)
     {
         strcpy(output + output_idx, "</li>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (code_block_open)
+    {
+        strcpy(output + output_idx, "</code></pre>");
+        output_idx += strlen(output + output_idx);
+    }
+    if (code_open)
+    {
+        strcpy(output + output_idx, "</code>");
         output_idx += strlen(output + output_idx);
     }
     output[output_idx] = '\0';
