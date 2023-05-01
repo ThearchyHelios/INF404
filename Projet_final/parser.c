@@ -1,14 +1,14 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 16:30:31
+ * @LastEditTime: 2023-05-01 12:59:34
  * @LastEditors: ThearchyHelios
  * @Description:
- * @FilePath: /INF404/Projet_final/analyse_syntaxique.c
+ * @FilePath: /INF404/Projet_final/parser.c
  */
 #include <string.h>
 #include <stdio.h>
-#include "analyse_syntaxique.h"
+#include "parser.h"
 #include "ast.h"
 
 // 在 analyse_syntaxique.c 中的 parse 函数中，我们从抽象语法树（AST）中读取节点，并将其转换为相应的 HTML 标签。

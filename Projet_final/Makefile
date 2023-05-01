@@ -2,7 +2,7 @@ PROGRAMS = markdown
 
 all:$(PROGRAMS)
 
-markdown.o: markdown.c analyse_lexicale.h analyse_syntaxique.h
+markdown.o: markdown.c analyse_lexicale.h parser.h
 	gcc -g -Wall -c markdown.c
 
 ast.o: ast.c ast.h
@@ -11,11 +11,11 @@ ast.o: ast.c ast.h
 analyse_lexicale.o: analyse_lexicale.c analyse_lexicale.h
 	gcc -g -Wall -c analyse_lexicale.c
 
-analyse_syntaxique.o: analyse_syntaxique.c analyse_syntaxique.h
-	gcc -g -Wall -c analyse_syntaxique.c
+parser.o: parser.c parser.h
+	gcc -g -Wall -c parser.c
 
-markdown: markdown.o analyse_lexicale.o analyse_syntaxique.o ast.o
-	gcc -g -Wall -o markdown markdown.o analyse_lexicale.o analyse_syntaxique.o ast.o
+markdown: markdown.o analyse_lexicale.o parser.o ast.o
+	gcc -g -Wall -o markdown markdown.o analyse_lexicale.o parser.o ast.o
 
 clean:
 	rm -f *.o $(PROGRAMS)

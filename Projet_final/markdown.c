@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-30 14:26:39
+ * @LastEditTime: 2023-05-01 12:59:14
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/Projet_final/markdown.c
@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "analyse_lexicale.h"
-#include "analyse_syntaxique.h"
+#include "parser.h"
 
 int main(int argc, char const *argv[])
 {
@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
         // remove the ancient output file
         remove("output.html");
         // read each lines of the file
-        while (fgets(input, 1024, fp) != NULL)
+        while (fgets(input, 1024, fp) != NULL) // read a line
         {
             // lex the input
             AST *ast = lex(input);

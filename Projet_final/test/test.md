@@ -16,9 +16,6 @@ Here's a photo: ![This is a photo](https://thearchyhelios.com/images/INF404/logo
   - Unordered list 1.4
   - Unordered list 1.5
 
-
-
-
 word test
 
 [Google search engine](https://www.google.com)

@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-05-01 11:42:45
+ * @LastEditTime: 2023-05-01 13:43:17
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
@@ -14,6 +14,7 @@
 int tab_level = 0;
 int tabs_before_dash = 0;
 int tabs_before_dash_old = 0;
+int break_ul = 0;
 
 // fonction count_tabs: 计算当前行在首部的 tab 数量或者空格数量
 int count_tabs(const char *input, int dash_position)
@@ -47,8 +48,6 @@ AST *lex(const char *input)
     size_t len = strlen(input);
     for (size_t i = 0; i < len; ++i)
     {
-        printf("input[i]: %c\n", input[i]);
-        printf("input[i+1]: %c\n", input[i + 1]);
         switch (input[i])
         {
         case '#':
@@ -164,11 +163,11 @@ AST *lex(const char *input)
         }
         case '-':
         {
+            break_ul = 0;
             if (input[i + 1] == ' ')
             {
                 int tab_before_dash_before = tabs_before_dash;
                 int tabs_before_dash_after = count_tabs(input, i);
-                printf("tabs_before_dash_after: %d\n", tabs_before_dash_after);
                 if (tabs_before_dash_after > tab_before_dash_before)
                 {
                     for (int j = 0; j < tabs_before_dash_after - tab_before_dash_before; ++j)
@@ -206,10 +205,8 @@ AST *lex(const char *input)
         }
         case '\n':
         {
-            if (input[i + 1] == '\n')
+            if (break_ul)
             {
-                printf("True\n");
-                printf("tabs_before_dash: %d\n", tabs_before_dash);
                 if (tabs_before_dash > 0)
                 {
                     for (int j = 0; j < tabs_before_dash; ++j)
@@ -220,10 +217,12 @@ AST *lex(const char *input)
                 }
                 append_node(ast, create_node(BR, "\n"));
                 ++i;
+                break_ul = 0;
             }
             else
             {
                 append_node(ast, create_node(BR, "\n"));
+                break_ul = 1;
             }
             break;
         }
