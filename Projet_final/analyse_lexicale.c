@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-04-30 16:35:42
+ * @LastEditTime: 2023-05-01 11:42:45
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
@@ -47,6 +47,8 @@ AST *lex(const char *input)
     size_t len = strlen(input);
     for (size_t i = 0; i < len; ++i)
     {
+        printf("input[i]: %c\n", input[i]);
+        printf("input[i+1]: %c\n", input[i + 1]);
         switch (input[i])
         {
         case '#':
@@ -166,6 +168,7 @@ AST *lex(const char *input)
             {
                 int tab_before_dash_before = tabs_before_dash;
                 int tabs_before_dash_after = count_tabs(input, i);
+                printf("tabs_before_dash_after: %d\n", tabs_before_dash_after);
                 if (tabs_before_dash_after > tab_before_dash_before)
                 {
                     for (int j = 0; j < tabs_before_dash_after - tab_before_dash_before; ++j)
@@ -205,13 +208,15 @@ AST *lex(const char *input)
         {
             if (input[i + 1] == '\n')
             {
-                if (tabs_before_dash_old > 0)
+                printf("True\n");
+                printf("tabs_before_dash: %d\n", tabs_before_dash);
+                if (tabs_before_dash > 0)
                 {
-                    for (int j = 0; j < tabs_before_dash_old; ++j)
+                    for (int j = 0; j < tabs_before_dash; ++j)
                     {
                         append_node(ast, create_node(UL_CLOSE, "\t"));
                     }
-                    tabs_before_dash_old = 0;
+                    tabs_before_dash = 0;
                 }
                 append_node(ast, create_node(BR, "\n"));
                 ++i;

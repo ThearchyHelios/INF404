@@ -35,7 +35,8 @@ Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du nav
   - [x] Gestion des images
   - [x] Gestion des Checkbox
   - [ ] CSS support
-- [x] Affichage des fichiers HTML dans un navigateur web
+  - [x] Affichage des fichiers HTML dans un navigateur web
+
 
 ## Références
 - [Markdown: Syntax](https://daringfireball.net/projects/markdown/syntax)
