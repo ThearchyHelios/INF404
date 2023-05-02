@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-05-01 13:43:17
+ * @LastEditTime: 2023-05-02 10:05:30
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
@@ -168,6 +168,8 @@ AST *lex(const char *input)
             {
                 int tab_before_dash_before = tabs_before_dash;
                 int tabs_before_dash_after = count_tabs(input, i);
+                printf("\ntab_before_dash_before: %d\n", tab_before_dash_before);
+                printf("tabs_before_dash_after: %d\n", tabs_before_dash_after);
                 if (tabs_before_dash_after > tab_before_dash_before)
                 {
                     for (int j = 0; j < tabs_before_dash_after - tab_before_dash_before; ++j)
@@ -184,6 +186,7 @@ AST *lex(const char *input)
                     }
                     tabs_before_dash = tabs_before_dash_after;
                 }
+                append_node(ast, create_node(LI, "-"));
                 if (input[i + 2] == '[' && input[i + 3] == 'x' && input[i + 4] == ']')
                 {
                     append_node(ast, create_node(CHECKED_BOX, "[x]"));
@@ -194,7 +197,6 @@ AST *lex(const char *input)
                     append_node(ast, create_node(UNCHECKED_BOX, "[ ]"));
                     i += 4;
                 }
-                append_node(ast, create_node(LI, "-"));
                 ++i;
             }
             else

@@ -25,4 +25,4 @@ Ficher `test/font_style.md` -> `output.html`
 
 <img src="https://thearchyhelios.com/images/INF404/rapport%20image%201.png" alt="image1" style="zoom:33%;" /><img src="https://thearchyhelios.com/images/INF404/rapport%20image%203.png" alt="image3" style="zoom:33%;" />
 
-![image2](https://thearchyhelios.com/images/INF404/rapport%20image%202.png)
+<img src="https://thearchyhelios.com/images/INF404/rapport%20image%202.png" alt="image2" style="zoom: 33%;" />
