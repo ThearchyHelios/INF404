@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-04-30 16:25:27
+ * @LastEditTime: 2023-05-02 14:49:27
  * @LastEditors: ThearchyHelios
  * @Description: 
  * @FilePath: /INF404/Projet_final/ast.h
@@ -23,7 +23,7 @@ typedef enum
     LI,
     UL, // Unordered list
     UL_CLOSE, // Unordered list close
-    OL, // Ordered list
+    // OL, // Ordered list
     BR, // Line break
     CODE, // Code `code`
     CODE_BLOCK, // Code block ```code```
@@ -44,10 +44,10 @@ typedef struct
     Node *tail;
 } AST;
 
-Node *create_node(NodeType type, char *value);
-void free_node(Node *node);
-AST *create_ast();
-void append_node(AST *ast, Node *node);
-void free_ast(AST *ast);
+Node *create_node(NodeType type, char *value); // create a node with type and value
+void free_node(Node *node); // free a node
+AST *create_ast(); // create an AST
+void append_node(AST *ast, Node *node); // append a node to the AST
+void free_ast(AST *ast); // free an AST
 
 #endif

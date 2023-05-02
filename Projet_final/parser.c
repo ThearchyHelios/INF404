@@ -1,7 +1,7 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-05-01 12:59:34
+ * @LastEditTime: 2023-05-02 14:40:43
  * @LastEditors: ThearchyHelios
  * @Description:
  * @FilePath: /INF404/Projet_final/parser.c
@@ -24,13 +24,8 @@ void parse(AST *ast, char *output)
     int strike_through_open = 0;
     int sub_open = 0;
     int img_open = 0;
-    int ul_open = 0;
-    int li_open = 0;
-    int ordered_list_level = 0;
-    int yaml_open = 0;
     int unordered_list_level = 0;
-    int new_level = 0;
-    int list_level = 0;
+    int li_open = 0;
     int code_block_open = 0;
     int code_open = 0;
 

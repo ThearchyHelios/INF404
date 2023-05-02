@@ -1,9 +1,9 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 22:01:10
- * @LastEditTime: 2023-05-01 12:59:14
+ * @LastEditTime: 2023-05-02 14:42:56
  * @LastEditors: ThearchyHelios
- * @Description: 
+ * @Description: Principal file of the project
  * @FilePath: /INF404/Projet_final/markdown.c
  */
 #include <stdio.h>
@@ -16,13 +16,18 @@ int main(int argc, char const *argv[])
 {
     char input[1024];
     char output[2048];
-    // open a file
+    // open a file only ends with .md
     FILE *fp = fopen(argv[1], "r");
+    // FILE *fp = fopen(argv[1], "r");
     if (fp == NULL)
     {
-        printf("Error opening file: %s", "test.md");
+        printf("Error opening file: %s", argv[1]);
         return 1;
-    } else {
+    } else if (strstr(argv[1], ".md") == NULL) {
+        printf("Error: %s is not a markdown file", argv[1]);
+        return 1;
+    } else
+    {
         // remove the ancient output file
         remove("output.html");
         // read each lines of the file

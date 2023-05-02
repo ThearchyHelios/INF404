@@ -1,22 +1,24 @@
 /*
  * @Author: ThearchyHelios (Yilun JIANG)
  * @Date: 2023-04-19 21:29:53
- * @LastEditTime: 2023-05-02 10:05:30
+ * @LastEditTime: 2023-05-02 14:47:55
  * @LastEditors: ThearchyHelios
  * @Description: Analyse de la chaîne d'entrée et stockage des résultats dans un AST
  * @FilePath: /INF404/Projet_final/analyse_lexicale.c
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "analyse_lexicale.h"
 
-int tab_level = 0;
-int tabs_before_dash = 0;
-int tabs_before_dash_old = 0;
-int break_ul = 0;
+int tab_level = 0; // tab_level: Current tab level
+int tabs_before_dash = 0; // tabs_before_dash: Number of tabs before the dash
+int tabs_before_dash_old = 0; // tabs_before_dash_old: Number of tabs before the dash in the previous line
+int break_ul = 0; // break_ul: Whether to break the ul list
+int ul_counter =0; // ul_counter: Number of ul lists
 
-// fonction count_tabs: 计算当前行在首部的 tab 数量或者空格数量
+// fonction count_tabs: Count the number of tabs before the dash
 int count_tabs(const char *input, int dash_position)
 {
     int count_tabs = 0;
@@ -24,6 +26,7 @@ int count_tabs(const char *input, int dash_position)
     int i = dash_position - 1;
 
     // 计算前导制表符数量
+    // Calculate the number of leading tabs
     while (i >= 0 && input[i] == '\t')
     {
         count_tabs++;
@@ -31,6 +34,7 @@ int count_tabs(const char *input, int dash_position)
     }
 
     // 计算前导空格数量
+    // Calculate the number of leading spaces
     while (i >= 0 && input[i] == ' ')
     {
         count_spaces++;
@@ -41,16 +45,17 @@ int count_tabs(const char *input, int dash_position)
     return count_tabs;
 }
 
+// fonction lex: Analyse the input string and store the results in an AST
 AST *lex(const char *input)
 {
-    AST *ast = create_ast();
+    AST *ast = create_ast(); // ast: Abstract syntax tree
 
-    size_t len = strlen(input);
-    for (size_t i = 0; i < len; ++i)
+    size_t len = strlen(input); // len: Length of the input string
+    for (size_t i = 0; i < len; ++i) // Boucle de parcours de la chaîne d'entrée
     {
         switch (input[i])
         {
-        case '#':
+        case '#': // Header
         {
             size_t j = i;
             while (input[j] == '#')
@@ -71,7 +76,7 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '*':
+        case '*': // soit un text a gras, soit un text a italic
         {
             if (input[i + 1] == '*')
             {
@@ -84,7 +89,7 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '[':
+        case '[': // un text a link
         {
             size_t j = i + 1;
             while (j < len && input[j] != ']')
@@ -110,12 +115,12 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '>':
+        case '>': // un text a quote
         {
             append_node(ast, create_node(QUOTE, ">"));
             break;
         }
-        case '~':
+        case '~': // soit un text a strikethrough, soit un text a sub
         {
             if (input[i + 1] == '~')
             {
@@ -128,7 +133,7 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '!':
+        case '!': // un text a img
         {
             if (input[i + 1] == '[')
             {
@@ -161,38 +166,36 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '-':
+        case '-': // unordered list
         {
             break_ul = 0;
             if (input[i + 1] == ' ')
             {
-                int tab_before_dash_before = tabs_before_dash;
-                int tabs_before_dash_after = count_tabs(input, i);
-                printf("\ntab_before_dash_before: %d\n", tab_before_dash_before);
-                printf("tabs_before_dash_after: %d\n", tabs_before_dash_after);
-                if (tabs_before_dash_after > tab_before_dash_before)
+                int tabs_before_dash_before = tabs_before_dash; // tabs_before_dash_before: Number of tabs before the dash in the previous line
+                int tabs_before_dash_after = count_tabs(input, i); // tabs_before_dash_after: Number of tabs before the dash in the current line
+                if (tabs_before_dash_after > tabs_before_dash_before) // If the number of tabs before the dash in the current line is greater than the number of tabs before the dash in the previous line, then add a ul list
                 {
-                    for (int j = 0; j < tabs_before_dash_after - tab_before_dash_before; ++j)
+                    for (int j = 0; j < tabs_before_dash_after - tabs_before_dash_before; ++j)
                     {
                         append_node(ast, create_node(UL, "\t"));
                     }
                     tabs_before_dash = tabs_before_dash_after;
                 }
-                else if (tabs_before_dash_after < tab_before_dash_before)
+                else if (tabs_before_dash_after < tabs_before_dash_before) // If the number of tabs before the dash in the current line is less than the number of tabs before the dash in the previous line, then close the ul list
                 {
-                    for (int j = 0; j < tab_before_dash_before - tabs_before_dash_after; ++j)
+                    for (int j = 0; j < tabs_before_dash_before - tabs_before_dash_after; ++j)
                     {
                         append_node(ast, create_node(UL_CLOSE, "\t"));
                     }
                     tabs_before_dash = tabs_before_dash_after;
                 }
                 append_node(ast, create_node(LI, "-"));
-                if (input[i + 2] == '[' && input[i + 3] == 'x' && input[i + 4] == ']')
+                if (input[i + 2] == '[' && input[i + 3] == 'x' && input[i + 4] == ']') // If the current line is a checked box, then add a checked box
                 {
                     append_node(ast, create_node(CHECKED_BOX, "[x]"));
                     i += 4;
                 }
-                else if (input[i + 2] == '[' && input[i + 3] == ' ' && input[i + 4] == ']')
+                else if (input[i + 2] == '[' && input[i + 3] == ' ' && input[i + 4] == ']') // If the current line is an unchecked box, then add an unchecked box
                 {
                     append_node(ast, create_node(UNCHECKED_BOX, "[ ]"));
                     i += 4;
@@ -205,11 +208,11 @@ AST *lex(const char *input)
             }
             break;
         }
-        case '\n':
+        case '\n': // line break
         {
-            if (break_ul)
+            if (break_ul) // If the previous line is a ul list, then close the ul list
             {
-                if (tabs_before_dash > 0)
+                if (tabs_before_dash > 0) // If the number of tabs before the dash in the previous line is greater than 0, then close the ul list and reset the number of tabs before the dash to 0
                 {
                     for (int j = 0; j < tabs_before_dash; ++j)
                     {
@@ -238,7 +241,7 @@ AST *lex(const char *input)
             {
                 ++j;
             }
-            if (j < len && input[j + 1] == '`' && input[j + 2] == '`')
+            if (j < len && input[j + 1] == '`' && input[j + 2] == '`') // CODE_BLOCK mais bugged
             {
                 size_t k = j + 3;
                 while (k < len && input[k] != '`')
@@ -251,13 +254,13 @@ AST *lex(const char *input)
                     i = k;
                 }
             }
-            else
+            else // CODE
             {
                 append_node(ast, create_node(CODE, "`"));
             }
             break;
         }
-        default:
+        default: // text
         {
             char value[2] = {input[i], '\0'};
             append_node(ast, create_node(TEXT, value));
