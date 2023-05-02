@@ -1,8 +1,6 @@
 # Interpréteur de Markdown en HTML
 Un projet qui compile les fichiers markdown en fichiers HTML et les affiche dans un navigateur web.
-
 ![Markdown to HTML](https://thearchyhelios.com/images/INF404/Markdown%20to%20HTML.png)
-
 ## Requirements
 Vous devez disposer des logiciels suivants pour utiliser le projet:
 - gcc
@@ -36,7 +34,6 @@ Cette commande génère un fichier ` output.html ` et l'affiche à l'aide du nav
   - [x] Gestion des Checkbox
   - [ ] CSS support
   - [x] Affichage des fichiers HTML dans un navigateur web
-
 
 ## Références
 - [Markdown: Syntax](https://daringfireball.net/projects/markdown/syntax)

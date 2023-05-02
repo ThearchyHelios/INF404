@@ -19,6 +19,10 @@ La raison pour laquelle j'ai choisi ce projet est que je utilise beaucoup de Mar
 - Arbre syntaxique abstrait (AST) : L'AST est une structure de données qui représente le texte d'entrée sous une forme hiérarchique. Il est utilisé pour faciliter la conversion du texte d'entrée en HTML en permettant de naviguer et de manipuler facilement la structure du document.
 - Conversion en HTML (Parser) : Une fois l'AST créé, le programme parcourt cette structure pour générer le code HTML correspondant. Cette étape assure que le formatage et la mise en page du texte d'entrée sont préservés dans la sortie HTML.
 
+## Documents supportés
+
+Tous les fichiers terminés par `.md` qui respectent la spécification markdown
+
 ## Exemple
 
 Ficher `test/font_style.md` -> `output.html`
